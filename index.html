@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f7f6f1">
+<title>Learn Speed Calculation — by Suraj Kumar Basa</title>
+<style>
+  :root{--paper:#f8f9ff;--surface:#ffffff;--ink:#17213b;--muted:#667085;--line:#dce2f0;--sage:#d8f8e6;--sage-deep:#087f5b;--blue:#dce8ff;--lav:#eee1ff;--sand:#fff0c2;--rose:#ffe0e5;--electric:#315cff;--orange:#ff7a1a;--shadow:0 18px 55px rgba(35,57,120,.10)}
+  *{box-sizing:border-box} html,body{margin:0;min-height:100%;background:var(--paper);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif} body{min-height:100svh} button,input{font:inherit} button{cursor:pointer;-webkit-tap-highlight-color:transparent} button:focus-visible,input:focus-visible{outline:3px solid #315cff;outline-offset:3px}
+  .app{min-height:100svh;display:flex;flex-direction:column;max-width:1000px;margin:0 auto;padding:clamp(20px,5vw,48px);padding-bottom:max(24px,env(safe-area-inset-bottom))}.topline{display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:.78rem;letter-spacing:.12em;text-transform:uppercase}.brandmark{display:flex;align-items:center;gap:10px;font-weight:850;color:var(--ink);letter-spacing:.08em}.brand-icon{width:32px;height:32px;border-radius:9px;background:var(--electric);display:grid;place-items:center;color:white;font-size:1.05rem;letter-spacing:0;box-shadow:0 5px 12px #315cff40}.screen{display:none;flex:1;animation:appear .24s ease}.screen.active{display:flex;flex-direction:column}@keyframes appear{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+  .home{justify-content:center;align-items:flex-start;max-width:620px;width:100%;margin:auto;padding:clamp(42px,10vh,100px) 0}.eyebrow{font-size:.76rem;font-weight:850;letter-spacing:.16em;text-transform:uppercase;color:var(--electric)}h1{font-size:clamp(3.2rem,12vw,6.2rem);line-height:.95;letter-spacing:-.075em;margin:18px 0 22px;font-weight:720}h2{font-size:clamp(1.65rem,5vw,2.5rem);letter-spacing:-.045em;margin:0 0 12px}.lead{color:var(--muted);font-size:clamp(1rem,2.5vw,1.15rem);line-height:1.7;max-width:430px;margin:0 0 32px}.primary{border:0;background:var(--electric);color:white;border-radius:16px;padding:17px 24px;font-weight:650;min-height:56px;box-shadow:0 8px 22px rgba(38,56,47,.13);transition:transform .15s,background .15s}.primary:hover{background:#2145e8;transform:translateY(-1px)}.primary:active{transform:translateY(0)}.home-note{margin-top:20px;font-size:.82rem;color:var(--muted)}.creator-credit{margin-top:9px;font-size:.75rem;color:#8b968b;letter-spacing:.02em}.creator-credit strong{color:var(--sage-deep);font-weight:700}.mode-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;width:min(100%,520px)}.mode-card{border:1px solid var(--line);border-radius:18px;padding:18px 16px;min-height:112px;text-align:left;display:flex;flex-direction:column;justify-content:space-between;gap:12px;color:var(--ink);transition:transform .15s,box-shadow .15s}.mode-card:hover{transform:translateY(-2px);box-shadow:var(--shadow)}.mode-card.test{background:#315cff;color:#fff;border-color:#315cff;box-shadow:0 10px 25px #315cff30}.mode-card.learn{background:#00a878;color:#fff;border-color:#00a878;box-shadow:0 10px 25px #00a87830}.mode-card.progress-card{background:#ffb02e;color:#17213b;border-color:#ffb02e;box-shadow:0 10px 25px #ffb02e30}.mode-card .mode-desc{color:inherit;opacity:.86}.mode-icon{font-size:1.55rem}.mode-title{font-weight:750;font-size:1.05rem}.mode-desc{display:block;color:#667267;font-size:.78rem;line-height:1.4;margin-top:4px}.exit-learn{border:0;border-radius:10px;background:var(--orange);color:#fff;padding:8px 12px;font-weight:800;font-size:.72rem;letter-spacing:0;text-transform:none;display:none}.learn-mode .exit-learn{display:inline-block}.decor{position:absolute;right:clamp(20px,9vw,110px);top:28%;width:clamp(100px,20vw,190px);aspect-ratio:1;border-radius:50%;background:linear-gradient(145deg,#e8eee4,#d8e4d5);opacity:.72;z-index:-1}.decor:after{content:"";position:absolute;inset:18%;border:1px solid rgba(86,116,93,.23);border-radius:50%}
+  .setup{width:100%;max-width:700px;margin:0 auto;padding:clamp(24px,5vh,56px) 0}.setup-back{margin-bottom:22px}.subtext{color:var(--muted);line-height:1.6;margin:0 0 28px}.option-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.option{border:1px solid var(--line);background:var(--surface);border-radius:18px;min-height:104px;padding:18px;text-align:left;display:flex;flex-direction:column;justify-content:space-between;transition:border-color .15s,transform .15s,box-shadow .15s}.option:hover{transform:translateY(-2px);box-shadow:var(--shadow)}.option.selected{border:2px solid var(--electric);padding:17px;background:#edf1ff;box-shadow:0 7px 18px #315cff18}.symbol{font-size:1.8rem;font-weight:550;line-height:1}.option-name{font-size:.9rem;font-weight:650}.option-hint{font-size:.76rem;color:var(--muted);margin-top:5px}.setup-footer{display:flex;gap:12px;align-items:center;margin-top:28px}.setup-footer .primary{flex:1}.back{border:1px solid var(--line);background:transparent;border-radius:14px;padding:15px 18px;color:var(--ink);min-height:54px}.duration-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.duration{border:1px solid var(--line);border-radius:18px;background:var(--surface);padding:22px 18px;text-align:left;min-height:94px}.duration strong{display:block;font-size:1.5rem;letter-spacing:-.04em}.duration span{font-size:.8rem;color:var(--muted)}.duration.selected{border:2px solid var(--electric);padding:21px 17px;background:#edf1ff}
+  /* Test screen intentionally has no cards, menus or distractions. */
+  #testScreen{width:100%;min-height:calc(100svh - 100px);justify-content:space-between;padding-top:18px;padding-bottom:8px}.test-head{display:flex;align-items:center;justify-content:space-between;gap:18px;color:var(--muted);font-size:.78rem;letter-spacing:.1em;text-transform:uppercase}.test-head strong{color:var(--ink);font-weight:700}.timer{font-variant-numeric:tabular-nums;letter-spacing:.04em;font-size:1rem;color:var(--ink)}.progress-track{height:3px;background:#e6e6dd;border-radius:10px;overflow:hidden;margin-top:18px}.progress-fill{height:100%;width:0;background:linear-gradient(90deg,var(--electric),#00c98d);transition:width .2s}.question-area{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:30px 0 20px;min-height:260px}.question-label{font-size:.75rem;color:var(--muted);letter-spacing:.14em;text-transform:uppercase;margin-bottom:24px}.question{font-size:clamp(3rem,13vw,7rem);font-weight:600;letter-spacing:-.07em;line-height:1.08;font-variant-numeric:tabular-nums;white-space:nowrap}.answer-wrap{display:flex;align-items:center;justify-content:center;width:min(100%,400px);margin-top:32px;position:relative}.answer-input{width:100%;background:transparent;border:0;border-bottom:2px solid #cbd3c8;border-radius:0;text-align:center;padding:10px 42px 14px;font-size:clamp(1.7rem,6vw,2.5rem);font-weight:500;color:var(--ink);outline:none!important;font-variant-numeric:tabular-nums}.answer-input:focus{border-bottom-color:var(--sage-deep)}.answer-input::placeholder{color:#c4c9c0}.clear-answer{position:absolute;right:4px;bottom:13px;border:0;background:transparent;color:var(--muted);font-size:1.4rem;padding:6px}.test-bottom{width:min(100%,400px);margin:0 auto}.keypad{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.key{border:1px solid #dce2f0;border-radius:13px;background:#edf1ff;min-height:clamp(47px,8vh,66px);font-size:1.25rem;color:var(--ink);font-weight:550}.key:hover{background:#dce5ff}.key.action{background:#00a878;color:white;border-color:#00a878}.test-tip{text-align:center;color:var(--muted);font-size:.76rem;margin:14px 0 0;min-height:18px}.test-actions{display:flex;justify-content:center;gap:10px;margin-top:12px}.quiet-button{border:0;background:transparent;color:var(--muted);padding:10px;font-size:.8rem}.result{align-items:center;justify-content:center;text-align:center;width:100%;max-width:620px;margin:auto;padding:70px 0}.result-word{font-size:clamp(4rem,16vw,8rem);line-height:1;letter-spacing:-.08em;font-weight:760;margin:18px 0}.result-word.win{color:#00a878}.result-word.loss{color:#e14b64}.result-sub{color:var(--muted);line-height:1.7;max-width:390px}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;width:100%;margin:34px 0}.stat{padding:17px 8px;background:rgba(255,255,255,.6);border-radius:15px}.stat strong{display:block;font-size:1.5rem;letter-spacing:-.04em}.stat span{display:block;font-size:.72rem;color:var(--muted);margin-top:5px}.finish-link{margin-top:12px}.footer{margin-top:auto;padding-top:20px;color:#9aa098;font-size:.72rem;display:flex;justify-content:space-between;gap:16px}.hidden{display:none!important}
+  .progress-heading{font-size:1rem;margin:24px 0 10px}.topic-progress{display:grid;gap:10px}.topic-row{padding:12px 14px;background:#fff;border:1px solid var(--line);border-radius:13px}.topic-row-top{display:flex;justify-content:space-between;gap:10px;font-size:.84rem;font-weight:750}.topic-row small{color:var(--muted);font-size:.74rem}.topic-bar{height:7px;background:#e9edfa;border-radius:20px;overflow:hidden;margin-top:9px}.topic-bar span{display:block;height:100%;background:linear-gradient(90deg,var(--electric),#00c98d);border-radius:20px}.progress-stats{margin:20px 0}.progress-stats .stat{background:#edf1ff}.progress-card{display:flex;flex-direction:row;align-items:center;justify-content:flex-start;gap:16px;text-align:left}.creator-credit strong{color:var(--electric)}.back{border-color:#315cff;color:#2449e8;font-weight:750;background:#edf1ff}.back:hover{background:#dce5ff}.mode-card:focus-visible,.option:focus-visible,.duration:focus-visible{outline-color:#ff7a1a}
+  @media(min-width:700px){.option-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.duration-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.option{min-height:120px}#testScreen{min-height:calc(100svh - 120px)}}
+  @media(max-width:420px){.mode-grid{gap:9px}.mode-card{padding:14px 12px;min-height:104px}.app{padding:20px;padding-bottom:max(18px,env(safe-area-inset-bottom))}.topline{font-size:.68rem}.brand-icon{width:27px;height:27px}.option-grid{gap:9px}.option{padding:14px;min-height:95px}.option.selected{padding:13px}.question{font-size:clamp(2.7rem,12vw,4.2rem)}.keypad{gap:6px}.key{border-radius:11px}.footer{font-size:.66rem}}
+  .test-tip.feedback-good{color:#087f5b;background:#d8f8e6;border-radius:10px;padding:5px 10px}.test-tip.feedback-warn{color:#a35a00;background:#fff0c2;border-radius:10px;padding:5px 10px}
+  /* Responsive fit: keep every test control inside short phones and landscape screens. */
+  body.test-mode{overflow:hidden}
+  body.test-mode .app{height:100svh;min-height:100svh;max-width:100%;padding: max(8px,env(safe-area-inset-top)) clamp(12px,3vw,28px) max(8px,env(safe-area-inset-bottom));overflow:hidden}
+  body.test-mode .topline{flex:0 0 auto;min-height:30px;font-size:.68rem;letter-spacing:.07em}
+  body.test-mode .brand-icon{width:25px;height:25px;border-radius:8px}
+  body.test-mode #testScreen{flex:1;min-height:0;height:0;width:100%;padding:clamp(6px,1.4svh,14px) 0 0;gap:0;overflow:hidden}
+  body.test-mode .test-head{flex:0 0 auto;gap:8px;font-size:clamp(.62rem,2.6vw,.76rem);letter-spacing:.06em}
+  body.test-mode .progress-track{flex:0 0 3px;margin-top:clamp(8px,1.5svh,14px)}
+  body.test-mode .question-area{flex:1 1 auto;min-height:0;padding:clamp(8px,1.8svh,20px) 0;justify-content:center;overflow:hidden}
+  body.test-mode .question-label{font-size:.68rem;margin-bottom:clamp(8px,1.5svh,18px)}
+  body.test-mode .question{max-width:100%;white-space:normal;overflow-wrap:anywhere;word-break:normal;font-size:clamp(2rem,min(12vw,8.5svh),6rem);line-height:1.12;letter-spacing:-.055em}
+  body.test-mode .answer-wrap{flex:0 0 auto;margin-top:clamp(8px,1.6svh,18px);width:min(100%,400px)}
+  body.test-mode .answer-input{font-size:clamp(1.45rem,5.5vw,2.2rem);padding:6px 36px 8px}
+  body.test-mode .clear-answer{bottom:5px;padding:5px}
+  body.test-mode .test-bottom{flex:0 0 auto;width:min(100%,400px);padding-bottom:2px}
+  body.test-mode .keypad{gap:clamp(4px,1vw,8px)}
+  body.test-mode .key{min-height:clamp(34px,6.2svh,58px);font-size:clamp(1rem,4vw,1.2rem);border-radius:10px}
+  body.test-mode .test-tip{font-size:.68rem;margin:5px 0 0;min-height:14px}
+  body.test-mode .test-actions{margin-top:2px}
+  body.test-mode .quiet-button{padding:3px 8px}
+  @media(max-height:650px){body.test-mode .question-label{margin-bottom:5px}body.test-mode .answer-wrap{margin-top:5px}body.test-mode .key{min-height:34px}body.test-mode .test-tip{margin-top:2px}body.test-mode .progress-track{margin-top:6px}}
+  @media(max-width:360px){body.test-mode .app{padding-left:10px;padding-right:10px}body.test-mode .question{font-size:clamp(1.8rem,10.5vw,2.7rem)}body.test-mode .test-head{font-size:.6rem}body.test-mode .key{min-height:34px}}
+  @media(orientation:landscape) and (max-height:500px){body.test-mode .topline{min-height:24px}body.test-mode .brand-icon{width:21px;height:21px}body.test-mode #testScreen{padding-top:3px}body.test-mode .question-area{padding:3px 0}body.test-mode .question{font-size:clamp(1.5rem,7vw,2.8rem)}body.test-mode .question-label{margin-bottom:3px}body.test-mode .answer-input{padding:2px 30px 4px;font-size:1.3rem}body.test-mode .key{min-height:30px}body.test-mode .test-tip{display:none}}
+  @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+
+  /* Larger, easier-to-tap keypad positioned a little higher on the test screen. */
+  body.test-mode .test-bottom{width:min(100%,460px);transform:translateY(clamp(-24px,-2.4svh,-10px));}
+  body.test-mode .keypad{gap:clamp(7px,1.5vw,12px)}
+  body.test-mode .key{min-height:clamp(50px,8.2svh,76px);font-size:clamp(1.2rem,4.6vw,1.55rem);border-radius:14px}
+  body.test-mode .test-tip{margin-top:5px}
+  @media(max-height:650px){body.test-mode .test-bottom{transform:translateY(-5px)}body.test-mode .key{min-height:clamp(38px,7.1svh,52px)}}
+  @media(orientation:landscape) and (max-height:500px){body.test-mode .test-bottom{transform:none}body.test-mode .key{min-height:32px;font-size:1.05rem}}
+</style>
+</head>
+<body>
+<div class="decor" aria-hidden="true"></div>
+<div class="app">
+  <header class="topline"><div class="brandmark"><span class="brand-icon" aria-label="Calculator logo"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><rect x="4" y="2.5" width="16" height="19" rx="3" fill="none" stroke="currentColor" stroke-width="1.8"/><rect x="7" y="5.5" width="10" height="4" rx="1" fill="currentColor"/><g fill="currentColor"><circle cx="8" cy="13" r="1.2"/><circle cx="12" cy="13" r="1.2"/><circle cx="16" cy="13" r="1.2"/><circle cx="8" cy="17" r="1.2"/><circle cx="12" cy="17" r="1.2"/><circle cx="16" cy="17" r="1.2"/></g></svg></span><span>LEARN SPEED CALCULATION</span></div><span id="headerCaption">Train your mind</span></header>
+
+  <main id="homeScreen" class="screen active">
+    <section class="home">
+      <div class="eyebrow">MENTAL MATH • SKILL BY SKILL</div>
+      <h1>Learn<br>speed.</h1>
+      <p class="lead">A personal maths coach that adapts to your answers, revisits mistakes, and helps you build real calculation speed.</p>
+      <div class="mode-grid" aria-label="Choose a mode">
+        <button class="mode-card test" id="homeTest"><span class="mode-icon">◷</span><span><span class="mode-title">Test</span><span class="mode-desc">Timed challenge</span></span></button>
+        <button class="mode-card learn" id="homeLearn"><span class="mode-icon">▦</span><span><span class="mode-title">Learn</span><span class="mode-desc">Personal practice · smart levels</span></span></button>
+      </div>
+      <button class="mode-card progress-card" id="homeProgress" type="button" style="margin-top:12px;width:min(100%,520px);min-height:76px"><span class="mode-icon">▤</span><span><span class="mode-title">My Progress</span><span class="mode-desc">Accuracy, streaks and mastered skills</span></span></button>
+      <div class="home-note">Practice smart. Get faster. Keep growing.</div>
+      <div class="creator-credit">Created by <strong>Suraj Kumar Basa</strong> ✦</div>
+    </section>
+  </main>
+
+  <main id="operationScreen" class="screen">
+    <section class="setup">
+      <button class="back setup-back" id="operationBack">← Home</button>
+      <div class="eyebrow">01 / Choose a focus</div><h2>What shall we practise?</h2><p class="subtext">Tap any topic to continue. Difficulty adjusts automatically.</p>
+      <div class="option-grid" id="operationOptions">
+        <button class="option selected" data-operation="add" aria-pressed="true"><span class="symbol">＋</span><span><span class="option-name">Addition</span></span></button>
+        <button class="option" data-operation="subtract" aria-pressed="false"><span class="symbol">−</span><span><span class="option-name">Subtraction</span></span></button>
+        <button class="option" data-operation="multiply" aria-pressed="false"><span class="symbol">×</span><span><span class="option-name">Multiplication</span></span></button>
+        <button class="option" data-operation="divide" aria-pressed="false"><span class="symbol">÷</span><span><span class="option-name">Division</span></span></button>
+        <button class="option" data-operation="square" aria-pressed="false"><span class="symbol">x²</span><span><span class="option-name">Squares</span></span></button>
+        <button class="option" data-operation="sqrt" aria-pressed="false"><span class="symbol">√x</span><span><span class="option-name">Square roots</span></span></button>
+        <button class="option" data-operation="cube" aria-pressed="false"><span class="symbol">x³</span><span><span class="option-name">Cubes</span></span></button>
+        <button class="option" data-operation="percent" aria-pressed="false"><span class="symbol">%</span><span><span class="option-name">Percentages</span></span></button>
+        <button class="option" data-operation="fraction" aria-pressed="false"><span class="symbol">½</span><span><span class="option-name">Fractions</span></span></button>
+        <button class="option" data-operation="ratio" aria-pressed="false"><span class="symbol">a:b</span><span><span class="option-name">Ratio</span></span></button>
+        <button class="option" data-operation="average" aria-pressed="false"><span class="symbol">x̄</span><span><span class="option-name">Averages</span></span></button>
+        <button class="option" data-operation="algebra" aria-pressed="false"><span class="symbol">x = ?</span><span><span class="option-name">Algebra</span></span></button>
+        <button class="option" data-operation="geometry" aria-pressed="false"><span class="symbol">△</span><span><span class="option-name">Geometry</span></span></button>
+        <button class="option" data-operation="mensuration" aria-pressed="false"><span class="symbol">▱</span><span><span class="option-name">Mensuration</span></span></button>
+        <button class="option" data-operation="mixed" aria-pressed="false"><span class="symbol">±×÷</span><span><span class="option-name">Mixed operations</span></span></button>
+      </div>
+    </section>
+  </main>
+
+  <main id="timeScreen" class="screen">
+    <section class="setup">
+      <button class="back setup-back" id="timeBack">← Topics</button>
+      <div class="eyebrow">02 / Set your time</div><h2>Make it your moment.</h2><p class="subtext">Tap a duration to start immediately.</p>
+      <div class="duration-grid" id="durationOptions">
+        <button class="duration" data-minutes="1" aria-pressed="false"><strong>1 min</strong><span>A quick spark</span></button>
+        <button class="duration selected" data-minutes="5" ari
